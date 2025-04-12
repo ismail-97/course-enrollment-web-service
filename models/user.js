@@ -1,7 +1,13 @@
 const { Model, DataTypes } = require('sequelize')
 const { sequelize } = require('../util/db')
 
-class User extends Model {}
+class User extends Model {
+  toJSON() {
+    const fields = { ...this.get() }
+    delete fields.passwordHash
+    return fields
+  }
+}
 
 User.init(
   {

@@ -3,15 +3,14 @@ const app = express()
 const { Sequelize } = require('sequelize')
 const { connectToDatabase } = require('./util/db')
 const { User } = require('./models/index')
+
+const authRouter = require('./controllers/auth_controller')
+const usersRouter = require('./controllers/users_controller')
+
 connectToDatabase()
 
 app.use(express.json())
-app.get('/', (req, res) => {
-  res.send('Hello, enrollment management backend service')
-})
-app.get('/api/users', async (req, res) => {
-  const users = await User.findAll()
-  res.json(users)
-})
+app.use('/', authRouter)
+app.use('/api/users', usersRouter)
 
 module.exports = app
