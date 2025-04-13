@@ -1,4 +1,4 @@
-const { User } = require('../../models')
+const { User, Course } = require('../../models')
 const { validationResult } = require('express-validator')
 
 const checkForValidationErrors = (req, res) => {
@@ -17,7 +17,18 @@ const checkEmailUniqueness = async (email) => {
   }
 }
 
+const checkTitleUniqueness = async (title) => {
+  const course = await Course.findOne({ where: { title } })
+  if (course) {
+    throw new Error('title is not unique')
+  }
+}
+
+const isString = (value) => typeof value === 'string' && value.length > 0
+
 module.exports = {
   checkForValidationErrors,
   checkEmailUniqueness,
+  checkTitleUniqueness,
+  isString,
 }

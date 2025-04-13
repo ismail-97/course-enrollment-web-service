@@ -20,7 +20,7 @@ usersRouter.get('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id)
 
-    // check for user if exist
+    // check if user exist
     const user = await User.findByPk(id)
 
     // if not exist, return not found error
@@ -44,7 +44,7 @@ usersRouter.post('/', validateNewUserInputs, async (req, res) => {
 
     const newUser = await User.create({ name, email, role, passwordHash })
     return res.json(newUser)
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({ message: 'server error', error: err.name })
   }
 })
