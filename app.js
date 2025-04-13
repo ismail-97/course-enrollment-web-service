@@ -4,9 +4,9 @@ const { Sequelize } = require('sequelize')
 const { connectToDatabase } = require('./util/db')
 const { User } = require('./models/index')
 const { authenticate, authorize } = require('./middlwares')
-const authRouter = require('./controllers/auth_controller')
-const usersRouter = require('./controllers/users_controller')
-const coursesRouter = require('./controllers/courses_controller')
+const authRouter = require('./controllers/authController')
+const usersRouter = require('./controllers/usersController')
+const coursesRouter = require('./controllers/coursesController')
 
 connectToDatabase()
 
