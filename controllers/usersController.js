@@ -10,9 +10,9 @@ usersRouter.get('/', async (req, res) => {
   try {
     const users = await User.findAll()
     res.status(200).json(users)
-  } catch (err) {
-    console.log(err)
-    res.status(500).json({ message: 'server error', error: err.name })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'server error', error: error.name })
   }
 })
 
@@ -30,8 +30,8 @@ usersRouter.get('/:id', async (req, res) => {
 
     // else return user
     res.status(200).json(user)
-  } catch (err) {
-    res.status(500).json({ message: 'server error', error: err.name })
+  } catch (error) {
+    res.status(500).json({ message: 'server error', error: error.name })
   }
 })
 
@@ -44,8 +44,8 @@ usersRouter.post('/', validateNewUserInputs, async (req, res) => {
 
     const newUser = await User.create({ name, email, role, passwordHash })
     return res.json(newUser)
-  } catch (err) {
-    res.status(500).json({ message: 'server error', error: err.name })
+  } catch (error) {
+    res.status(500).json({ message: 'server error', error: error.name })
   }
 })
 
@@ -65,8 +65,8 @@ usersRouter.put('/:id', validateEditUserInputs, async (req, res) => {
     await user.update(req.body)
 
     res.status(200).json({ message: 'user updated successfully', user })
-  } catch (err) {
-    res.status(500).json({ message: 'server error', error: err.name })
+  } catch (error) {
+    res.status(500).json({ message: 'server error', error: error.name })
   }
 })
 
@@ -86,8 +86,8 @@ usersRouter.delete('/:id', async (req, res) => {
     await user.destroy()
 
     res.status(200).json({ message: 'user deleted successfully' })
-  } catch (err) {
-    res.status(500).json({ message: 'server error', error: err.name })
+  } catch (error) {
+    res.status(500).json({ message: 'server error', error: error.name })
   }
 })
 
