@@ -9,7 +9,7 @@ const usersRouter = require('./controllers/usersController')
 const coursesRouter = require('./controllers/coursesController')
 const enrollmentRouter = require('./controllers/enrollmentsController')
 const requestLogger = require('./middlwares/utils/requestLogger')
-const { errorHandler } = require('./middlwares')
+const { errorHandler, unknownEndpoints } = require('./middlwares')
 
 connectToDatabase()
 
@@ -27,5 +27,6 @@ app.use('/api/courses', coursesRouter)
 app.use('/api/enrollments', enrollmentRouter)
 
 app.use(errorHandler)
+app.use(unknownEndpoints)
 
 module.exports = app
