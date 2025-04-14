@@ -53,7 +53,7 @@
        "password": "12ertyre"
      }
      
-  2. **Get Courses as Student**
+  2. **Get Courses as Instructor (only his own courses)**
 
      ```bash
      GET /api/courses
