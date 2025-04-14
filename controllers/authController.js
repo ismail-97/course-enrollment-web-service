@@ -16,13 +16,20 @@ authRouter.post('/login', validateCredentials, async (req, res) => {
     })
   }
 
-  const passwordIsCorrect = await bcrypt.compare(
-    passwordAsString,
-    user.passwordHash
-  )
+  try {
+    const passwordIsCorrect = await bcrypt.compare(
+      passwordAsString,
+      user.passwordHash
+    )
 
-  if (!passwordIsCorrect) {
-    return res.status(401).json({ message: 'invalid password.' })
+    if (!passwordIsCorrect) {
+      return res.status(401).json({ message: 'invalid password.' })
+    }
+  } catch (error) {
+    return res.status(400).json({
+      message: 'error with bcrypt',
+      error: error.message,
+    })
   }
 
   const tokenInfo = {
@@ -31,9 +38,16 @@ authRouter.post('/login', validateCredentials, async (req, res) => {
   }
   console.log('before token == ')
 
-  const token = JWT.sign(tokenInfo, SECRET)
+  try {
+    const token = JWT.sign(tokenInfo, SECRET)
 
-  res.status(200).send({ token })
+    res.status(200).send({ token })
+  } catch (error) {
+    return res.status(400).json({
+      message: 'error with JWT',
+      error: error.message,
+    })
+  }
 })
 
 module.exports = authRouter
