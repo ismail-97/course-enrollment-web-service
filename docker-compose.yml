@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+
+    env_file:
+      - .env
+
+    ports:
+      - '3000:3000'
+# no database service since the app uses a cloud service as a database
+# Just create .env file and provide valid Database URL as (DATABASE_URL) & JWT_SECRET as (SECRET).
