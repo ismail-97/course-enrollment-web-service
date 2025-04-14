@@ -113,6 +113,11 @@
      Delete /api/courses/:id
      Authorization: Bearer + "JWT token"
 
+# Important:
+- There is no option for sign up, The initial admin account is created manually in the database.
+- The admin then can add new students and instructors via APIs (restricted to admin only).
+- When creating the initial admin, the password have to be hashed using bcrypt library.
+- Use https://bcrypt-generator.com/ for generating the hash or write a script for it if prefered.
     
 
 
