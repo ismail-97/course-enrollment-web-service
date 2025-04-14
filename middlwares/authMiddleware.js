@@ -14,14 +14,8 @@ const authenticate = async (req, res, next) => {
   //remove the 'Bearer' word form the token header.
   token = token.substring(7)
 
-  let decoded
-  try {
-    // verify the token
-    decoded = jwt.verify(token, SECRET)
-  } catch (error) {
-    return res.status(401).json({ message: 'jwt error' })
-  }
-  // find the user
+  const decoded = jwt.verify(token, SECRET)
+
   const userId = decoded.id
   const user = await User.findByPk(userId)
 

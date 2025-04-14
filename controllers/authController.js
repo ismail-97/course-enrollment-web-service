@@ -36,18 +36,10 @@ authRouter.post('/login', validateCredentials, async (req, res) => {
     email: email,
     id: user.id,
   }
-  console.log('before token == ')
 
-  try {
-    const token = JWT.sign(tokenInfo, SECRET)
+  const token = JWT.sign(tokenInfo, SECRET)
 
-    res.status(200).send({ token })
-  } catch (error) {
-    return res.status(400).json({
-      message: 'error with JWT',
-      error: error.message,
-    })
-  }
+  res.status(200).send({ token })
 })
 
 module.exports = authRouter
