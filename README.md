@@ -111,7 +111,6 @@
 
      ```bash
      Delete /api/courses/:id
-     Content-Type: application/json
      Authorization: Bearer + "JWT token"
 
     
