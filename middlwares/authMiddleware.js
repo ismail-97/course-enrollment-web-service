@@ -8,30 +8,30 @@ const authenticate = async (req, res, next) => {
 
   //check if token is provided
   if (!token) {
-    res.status(401).json({ message: 'Token is needed' })
+    return res.status(401).json({ message: 'Token is needed' })
   }
 
   //remove the 'Bearer' word form the token header.
   token = token.substring(7)
 
+  let decoded
   try {
     // verify the token
-    const decoded = jwt.verify(token, SECRET)
-
-    // find the user
-    const userId = decoded.id
-    const user = await User.findByPk(userId)
-
-    // return not found if user doesn't exist
-    if (!user) {
-      return res.status(404).json({ message: 'user not found' })
-    }
-
-    //else assign the user to request object
-    req.user = user
+    decoded = jwt.verify(token, SECRET)
   } catch (error) {
-    return res.status(401).json({ message: 'Invalid token.' })
+    return res.status(401).json({ message: 'jwt error' })
   }
+  // find the user
+  const userId = decoded.id
+  const user = await User.findByPk(userId)
+
+  // return not found if user doesn't exist
+  if (!user) {
+    return res.status(404).json({ message: 'user not found' })
+  }
+
+  //else assign the user to request object
+  req.user = user
 
   next()
 }
