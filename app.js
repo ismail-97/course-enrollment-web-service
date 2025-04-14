@@ -9,7 +9,7 @@ const usersRouter = require('./controllers/usersController')
 const coursesRouter = require('./controllers/coursesController')
 const enrollmentRouter = require('./controllers/enrollmentsController')
 const requestLogger = require('./middlwares/utils/requestLogger')
-const errorHandler = require('./middlwares/errorHandler')
+const { errorHandler } = require('./middlwares')
 
 connectToDatabase()
 
