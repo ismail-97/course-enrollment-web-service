@@ -7,88 +7,67 @@ const {
 const { User } = require('../models/index')
 
 usersRouter.get('/', async (req, res) => {
-  try {
-    const users = await User.findAll()
-    res.status(200).json(users)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ message: 'server error', error: error.name })
-  }
+  const users = await User.findAll()
+  res.status(200).json(users)
 })
 
 usersRouter.get('/:id', async (req, res) => {
-  try {
-    const id = Number(req.params.id)
+  const id = Number(req.params.id)
 
-    // check if user exist
-    const user = await User.findByPk(id)
+  // check if user exist
+  const user = await User.findByPk(id)
 
-    // if not exist, return not found error
-    if (!user) {
-      return res.status(404).json({ message: `No user with id ${id}` })
-    }
-
-    // else return user
-    res.status(200).json(user)
-  } catch (error) {
-    res.status(500).json({ message: 'server error', error: error.name })
+  // if not exist, return not found error
+  if (!user) {
+    return res.status(404).json({ message: `No user with id ${id}` })
   }
+
+  // else return user
+  res.status(200).json(user)
 })
 
 usersRouter.post('/', validateNewUserInputs, async (req, res) => {
   const { name, email, role, password } = req.body
 
-  try {
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(password, saltRounds)
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash(password, saltRounds)
 
-    const newUser = await User.create({ name, email, role, passwordHash })
-    return res.json(newUser)
-  } catch (error) {
-    res.status(500).json({ message: 'server error', error: error.name })
-  }
+  const newUser = await User.create({ name, email, role, passwordHash })
+  return res.json(newUser)
 })
 
 usersRouter.put('/:id', validateEditUserInputs, async (req, res) => {
-  try {
-    const id = Number(req.params.id)
+  const id = Number(req.params.id)
 
-    // check for user if exist
-    const user = await User.findByPk(id)
+  // check for user if exist
+  const user = await User.findByPk(id)
 
-    // if not exist, return not found error
-    if (!user) {
-      return res.status(404).json({ message: `No user with id ${id}` })
-    }
-
-    // else update
-    await user.update(req.body)
-
-    res.status(200).json({ message: 'user updated successfully', user })
-  } catch (error) {
-    res.status(500).json({ message: 'server error', error: error.name })
+  // if not exist, return not found error
+  if (!user) {
+    return res.status(404).json({ message: `No user with id ${id}` })
   }
+
+  // else update
+  await user.update(req.body)
+
+  res.status(200).json({ message: 'user updated successfully', user })
 })
 
 usersRouter.delete('/:id', async (req, res) => {
-  try {
-    const id = Number(req.params.id)
+  const id = Number(req.params.id)
 
-    // check for user if exist
-    const user = await User.findByPk(id)
+  // check for user if exist
+  const user = await User.findByPk(id)
 
-    // if not exist, return not found error
-    if (!user) {
-      return res.status(404).json({ message: `No user with id ${id}` })
-    }
-
-    // else delete
-    await user.destroy()
-
-    res.status(200).json({ message: 'user deleted successfully' })
-  } catch (error) {
-    res.status(500).json({ message: 'server error', error: error.name })
+  // if not exist, return not found error
+  if (!user) {
+    return res.status(404).json({ message: `No user with id ${id}` })
   }
+
+  // else delete
+  await user.destroy()
+
+  res.status(200).json({ message: 'user deleted successfully' })
 })
 
 module.exports = usersRouter
