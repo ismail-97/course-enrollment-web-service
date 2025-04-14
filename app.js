@@ -8,10 +8,13 @@ const authRouter = require('./controllers/authController')
 const usersRouter = require('./controllers/usersController')
 const coursesRouter = require('./controllers/coursesController')
 const enrollmentRouter = require('./controllers/enrollmentsController')
+const requestLogger = require('./middlwares/utils/requestLogger')
 
 connectToDatabase()
 
 app.use(express.json())
+app.use(requestLogger)
+
 app.use('/', authRouter)
 
 // all request handlers after this line should be authenticated

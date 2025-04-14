@@ -5,7 +5,8 @@ const validateNewCourseInputs = require('./validateNewCourseInputs')
 const validateEditCourseInputs = require('./validateEditCourseInputs')
 const validateEnrollmentInput = require('./validateEnrollmentInput')
 const { authenticate, authorize } = require('./authMiddleware')
-
+const requestLogger = require('./utils/requestLogger')
+requestLogger
 module.exports = {
   validateCredentials,
   validateNewUserInputs,
@@ -15,4 +16,5 @@ module.exports = {
   validateEnrollmentInput,
   authenticate,
   authorize,
+  requestLogger,
 }

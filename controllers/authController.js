@@ -10,8 +10,7 @@ authRouter.post('/login', validateCredentials, async (req, res) => {
   const passwordAsString = password.toString()
 
   try {
-    const user = await User.findOne({ where: { email } })
-
+    const user = await User.findOne({ where: { email }, raw: true })
     if (!user) {
       return res.status(401).json({
         message: 'No user associated with this email, please sign up.',
@@ -31,6 +30,7 @@ authRouter.post('/login', validateCredentials, async (req, res) => {
       email: email,
       id: user.id,
     }
+    console.log('before token == ')
 
     const token = JWT.sign(tokenInfo, SECRET)
 
